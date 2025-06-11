@@ -1,3 +1,4 @@
 PMC-VQA/
 .env
 notes.txt
+model_weights.pth
