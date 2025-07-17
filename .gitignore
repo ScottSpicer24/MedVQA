@@ -2,3 +2,13 @@ PMC-VQA/
 .env
 notes.txt
 model_weights.pth
+checkpoint-5000-001
+llava-merged
+checkpoint-5000-20250611T230006Z-1-001.zip
+checkpoint-5000-20250611T230006Z-1-002.zip
+model.tar.gz
+llava-merged-bnb-20250623T230138Z-1-001.zip
+llava-merged-bnb-001
+models
+llava-merged-bnb/model-00001-of-00002.safetensors
+llava-merged-bnb/model-00002-of-00002.safetensors
