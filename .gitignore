@@ -1,4 +1,5 @@
 PMC-VQA/
+aws/
 .env
 notes.txt
 model_weights.pth
@@ -12,3 +13,4 @@ llava-merged-bnb-001
 models
 llava-merged-bnb/model-00001-of-00002.safetensors
 llava-merged-bnb/model-00002-of-00002.safetensors
+PingEndpoint.py

@@ -69,12 +69,13 @@ class EndpointHandler:
         img = Image.open(io.BytesIO(base64.b64decode(data["image"]))).convert("RGB")
 
         # 2️⃣  Build prompt & preprocess
-        prompt = format_input(
-            data["question"], data["a"], data["b"], data["c"], data["d"]
-        )
-        inputs = self.processor(prompt=prompt, images=img, return_tensors="pt").to(
-            self.device
-        )
+        prompt = format_input(data["question"], data["a"], data["b"], data["c"], data["d"])
+        
+        inputs = self.processor(images=img, text=prompt, 
+                                return_tensors="pt", 
+                                padding=True,       
+                                do_pad=True
+                                ).to(self.device)
 
         # 3️⃣  Generate
         outputs = self.model.generate(**inputs, max_new_tokens=128)

@@ -1,8 +1,0 @@
-Create Your Own Docker Container for Model Serving in Sagemaker:
-https://medium.com/@smertatli/creating-your-own-docker-container-for-model-serving-in-sagemaker-55161c1e9095
-
-Create a SageMaker inference endpoint with custom model & extended container:
-https://aws.amazon.com/blogs/machine-learning/create-a-sagemaker-inference-endpoint-with-custom-model-extended-container/
-
-Moving an image through its lifecycle in Amazon ECR
-https://docs.aws.amazon.com/AmazonECR/latest/userguide/getting-started-cli.html
