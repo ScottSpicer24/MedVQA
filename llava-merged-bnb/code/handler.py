@@ -58,28 +58,30 @@ class EndpointHandler:
             "a": "A: ...", "b": "...", "c": "...", "d": "..."
           } }
         """
-        '''
-        if isinstance(data, (bytes, bytearray)):
+        # Change the input to json/dict if it is not
+        if isinstance(data, (bytes, bytearray, str)):
             data = json.loads(data)
-        '''
+
         # Extract the input
         data = data['inputs']
-
-        # 1️⃣  Decode image
+        
+        # Decode image
         img = Image.open(io.BytesIO(base64.b64decode(data["image"]))).convert("RGB")
 
-        # 2️⃣  Build prompt & preprocess
-        prompt = format_input(data["question"], data["a"], data["b"], data["c"], data["d"])
+        # Build prompt & preprocess
+        conversation = format_input(data["question"], data["a"], data["b"], data["c"], data["d"])
+        prompt = self.processor.apply_chat_template(conversation, add_generation_prompt=True)
         
-        inputs = self.processor(images=img, text=prompt, 
+        inputs = self.processor(img, prompt, 
                                 return_tensors="pt", 
                                 padding=True,       
                                 do_pad=True
                                 ).to(self.device)
 
-        # 3️⃣  Generate
+        # Generate
         outputs = self.model.generate(**inputs, max_new_tokens=128)
         answer = self.processor.tokenizer.decode(outputs[0], skip_special_tokens=True)
+        print(answer)
 
-        # 4️⃣  Return JSON-serialisable dict
+        # Return JSON-serialisable dict
         return {"response": answer}

@@ -1,0 +1,61 @@
+<!-- Single page application -->
+
+<main class="main">
+  <div class="header-text">
+    <h1> Med Llava </h1>
+    <h3> By Scott Spicer </h3>
+    <p>
+      Originally a class project I expanded on, this features a demo of a LLaVA model
+      fine-tuned for medical visual-questioning-answering.
+    </p>
+  </div>
+
+  <div class="inputs">
+    @if (!imageUploaded) {
+      <div class="dropzone">
+        <input type="file"
+               id="fileDrop"
+               (change)="onFileChange($event)">
+        <h3>Drag & Drop files here</h3>
+        <mat-icon>attachment</mat-icon>
+        <h3>or</h3>
+        <label for="fileDrop">Browse for file</label>
+      </div>
+    }
+    @else {
+      <!-- instant preview -->
+      <div class="uploadedImg">
+        <img [src]="imageSrc">
+        <button type="button" (click)="resetImage()">Clear Image</button>
+      </div>
+    }
+
+
+    <div class="question-grid">
+      <label for="question-input">Question</label>
+      <textarea class="question-input" id="question-input" [(ngModel)]="input.question"></textarea>
+    </div>
+
+
+    <div class="choices-grid">
+      <label for="a" >A: </label>
+      <input type="text" id="a" [(ngModel)]="input.a">
+
+      <label for="b">B: </label>
+      <input type="text" id="b" [(ngModel)]="input.b">
+
+      <label for="c">C: </label>
+      <input type="text" id="c" [(ngModel)]="input.c">
+
+      <label for="d">D: </label>
+      <input type="text" id="d" [(ngModel)]="input.d">
+    </div>
+
+
+    <button (click)="submit()">Submit</button>
+  </div>
+
+</main>
+
+
+<router-outlet />

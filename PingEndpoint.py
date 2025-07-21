@@ -1,19 +1,21 @@
 import requests
+import json
 
-API_URL = "https://cmph5tojatzmzxtw.us-east-1.aws.endpoints.huggingface.cloud"
+API_URL = "https://y3y4q9sxi6y80ss0.us-east-1.aws.endpoints.huggingface.cloud"
 headers = {
 	"Accept" : "application/json",
-	"Authorization": "Bearer HF_TOKEN",
 	"Content-Type": "application/json" 
 }
 
 def query(payload):
 	response = requests.post(API_URL, headers=headers, json=payload)
-	return response.json()
+	out = response.json()['response']
+	ans = out.split('ASSISTANT:')[-1].strip()
+	print(ans)
+	return ans
 
-output = query({
-	"inputs": "![](https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/transformers/rabbit.png)caption en",
-	"parameters": {
-		"max_new_tokens": 150
-	}
-})
+path = "MedLlavaInputExample.json"
+with open(path, "r") as f:   # always use a context‑manager
+	data = json.load(f)  
+
+output = query(data)
