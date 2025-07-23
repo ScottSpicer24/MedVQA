@@ -24,6 +24,7 @@ export interface Input {
 export class App {
   protected readonly title = signal('MedLlava');
   private apiURL = "https://y3y4q9sxi6y80ss0.us-east-1.aws.endpoints.huggingface.cloud"
+  private testURL = "https://httpbin.org/ "
 
   input: Input = {
     image: null,
@@ -79,7 +80,7 @@ export class App {
     this.selectedFile = undefined;
   }
 
-  submit(): Observable < any > {
+  submit(): Observable <any> {
     // Add image to input
     this.input.image = this.imageSrc;
 
@@ -87,17 +88,17 @@ export class App {
 
 
     // Create payload
-    const model_in = {inputs : this.input}
-    const body = JSON.stringify(model_in)
+    const body = {inputs : this.input}
     const headers = new HttpHeaders({
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     });
     console.log("About to send...")
+    console.log(body);
 
     // POST <url> with body and headers, then log the JSON that comes back
-    return this.http.post<any>(this.apiURL, body, { headers }).pipe(
-      tap(res => console.log('model response →', res))
+    return this.http.post<any>(this.testURL, body, { headers: headers }).pipe(
+      tap(res => console.log('model response → ', res))
     );
 
   }
