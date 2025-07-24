@@ -24,7 +24,7 @@ export interface Input {
 export class App {
   protected readonly title = signal('MedLlava');
   private apiURL = "https://y3y4q9sxi6y80ss0.us-east-1.aws.endpoints.huggingface.cloud"
-  private testURL = "https://httpbin.org/ "
+  private testURL = "https://httpbin.org/"
 
   input: Input = {
     image: null,
@@ -41,6 +41,10 @@ export class App {
   // keep the File around if you need to POST later
   selectedFile?: File;
   imageUploaded: boolean = false
+
+  // Store answer
+  answer = '';
+  showAnswer = false;
 
   onFileChange(event: Event) {
     const input = event.target as HTMLInputElement;
@@ -80,26 +84,86 @@ export class App {
     this.selectedFile = undefined;
   }
 
-  submit(): Observable <any> {
-    // Add image to input
-    this.input.image = this.imageSrc;
+  formatData(): Input | null {
+    let sentImage = this.imageSrc;
+    if(sentImage !== null){
+      sentImage = sentImage.replace(/^data:.*?;base64,/, '');
+      console.log(sentImage.slice(0, 20));
+    }
+    else{
+      alert("Error: No Image Given.")
+      return null;
+    }
 
-    // Ensure data integerity
+    // Ensure all fields have entries, add letter to letter choices.
+    if(this.input.question === null){
+      alert("Error: The entered question is invalid.")
+      return null;
+    }
+    if(this.input.a === null){
+      alert("Error: A letter selection is invalid.")
+      return null;
+    }
+    
+    if(this.input.b === null){
+      alert("Error: B letter selection is invalid.")
+      return null;
+    }
+    
+    if(this.input.c === null){
+      alert("Error: C letter selection is invalid.")
+      return null;
+    }
+    
+    if(this.input.d === null){
+      alert("Error: D letter selection is invalid.")
+      return null;
+    }
+    
 
+    const sentInput : Input = {
+      image: sentImage,
+      question: this.input.question,
+      a: "A: " + this.input.a,
+      b: "B: " + this.input.b,
+      c: "C: " + this.input.c,
+      d: "D: " + this.input.d,
+    }
+
+    // Data is not formatted an validity is ensured.
+    return sentInput;
+  }
+
+
+  /*: any Observable <any>*/
+  submit() {
+    // Format data and ensure it is valid.
+    const sentInput = this.formatData();
+    if(sentInput === null) {
+      return;
+    }
 
     // Create payload
-    const body = {inputs : this.input}
+    const body = {inputs : sentInput}
     const headers = new HttpHeaders({
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     });
     console.log("About to send...")
-    console.log(body);
 
-    // POST <url> with body and headers, then log the JSON that comes back
-    return this.http.post<any>(this.testURL, body, { headers: headers }).pipe(
-      tap(res => console.log('model response → ', res))
-    );
-
+    // POST <url> with body and headers, then log and save the JSON that comes back
+    let resp = {};
+    this.http.post(this.apiURL, body, { headers: headers }).subscribe(data => {
+      console.log(data);
+      resp = data
+    });
   }
 }
+
+/* 
+ { response: "USER: \nBased on the image and the caption, 
+  answer the following multiple-choice question by selecting the correct letter.
+  \nQuestion: What are those red spots on this persons stomach
+  \nA: hives\nB: warts\nC: freckles\nD: a rash\n ASSISTANT: Answer:  ASSISTANT: D" }
+
+*/
