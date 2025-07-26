@@ -6,13 +6,17 @@ import { delay, Observable, tap } from 'rxjs';
 import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-export interface Input {
+interface Input {
     image: string | null,
     question: string | null,
     a: string | null,
     b: string | null,
     c: string | null,
     d: string | null,
+}
+
+interface ModelResponse {
+  response : string
 }
 
 @Component({
@@ -134,8 +138,6 @@ export class App {
     return sentInput;
   }
 
-
-  /*: any Observable <any>*/
   submit() {
     // Format data and ensure it is valid.
     const sentInput = this.formatData();
@@ -143,8 +145,13 @@ export class App {
       return;
     }
 
+    this.Model(sentInput);
+
+  }
+
+  Model(model_in : Input) {
     // Create payload
-    const body = {inputs : sentInput}
+    const body = {inputs : model_in}
     const headers = new HttpHeaders({
       'Accept': 'application/json',
       'Content-Type': 'application/json'
@@ -152,18 +159,57 @@ export class App {
     console.log("About to send...")
 
     // POST <url> with body and headers, then log and save the JSON that comes back
-    let resp = {};
-    this.http.post(this.apiURL, body, { headers: headers }).subscribe(data => {
-      console.log(data);
-      resp = data
+    let ret_str = '';
+    this.http.post<ModelResponse>(this.apiURL, body, { headers: headers }).subscribe({
+      next: config => {    
+      console.log('Config fetched successfully:', typeof config);
+      
+      const ret_json = config;
+      console.log('ret_json:', ret_json);
+
+      const resp_str = ret_json.response;
+      console.log('resp_str:', resp_str);
+
+      const resp_list = resp_str.split("ASSISTANT:");
+      this.answer = resp_list[resp_list.length - 1].trim();
+      console.log('Extracted answer:', this.answer);
+
+      this.showAnswer = true;
+
+      this.cdr.detectChanges();
+      },  
+      error: err => {    // If the request times out, an error will have been emitted.  
+        alert(err)
+        return;
+      }
     });
+  }
+
+
+  reset(){
+    this.input= {
+      image: null,
+      question: null,
+      a: null,
+      b: null,
+      c: null,
+      d: null,
+    }
+    this.resetImage();
+    this.cdr.detectChanges();
   }
 }
 
 /* 
- { response: "USER: \nBased on the image and the caption, 
-  answer the following multiple-choice question by selecting the correct letter.
-  \nQuestion: What are those red spots on this persons stomach
-  \nA: hives\nB: warts\nC: freckles\nD: a rash\n ASSISTANT: Answer:  ASSISTANT: D" }
+ let resp = {};
+    this.http.post(this.apiURL, body, { headers: headers }).subscribe(data => {
+      console.log(data);
+      resp = data
+    });
+
+{ response: "USER: \nBased on the image and the caption, 
+answer the following multiple-choice question by selecting the correct letter.
+\nQuestion: What are those red spots on this persons stomach
+\nA: hives\nB: warts\nC: freckles\nD: a rash\n ASSISTANT: Answer:  ASSISTANT: D" }
 
 */
