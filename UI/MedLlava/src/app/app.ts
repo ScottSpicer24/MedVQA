@@ -5,6 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { delay, Observable, tap } from 'rxjs';
 import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Heartbeat } from './components/heartbeat/heartbeat';
 
 interface Input {
     image: string | null,
@@ -21,7 +22,7 @@ interface ModelResponse {
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, DragDropModule, MatIconModule, FormsModule],
+  imports: [RouterOutlet, DragDropModule, MatIconModule, FormsModule, Heartbeat],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
