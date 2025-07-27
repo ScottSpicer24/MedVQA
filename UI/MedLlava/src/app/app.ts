@@ -1,11 +1,12 @@
 import { DragDropModule } from '@angular/cdk/drag-drop';
-import { ChangeDetectorRef, Component, signal } from '@angular/core';
+import { ChangeDetectorRef, Component, signal, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { delay, Observable, tap } from 'rxjs';
 import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Heartbeat } from './components/heartbeat/heartbeat';
+import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout'
 
 interface Input {
     image: string | null,
@@ -26,7 +27,7 @@ interface ModelResponse {
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
-export class App {
+export class App implements OnInit  {
   protected readonly title = signal('MedLlava');
   private apiURL = "https://y3y4q9sxi6y80ss0.us-east-1.aws.endpoints.huggingface.cloud"
   private testURL = "https://httpbin.org/"
@@ -39,7 +40,24 @@ export class App {
     c: null,
     d: null,
   }
-  constructor(private cdr: ChangeDetectorRef, private http: HttpClient){}
+  handset: boolean = false;
+
+  constructor(private cdr: ChangeDetectorRef, private http: HttpClient, private responsive: BreakpointObserver){
+    console.log('HandsetPortrait ' + Breakpoints.HandsetPortrait);
+  }
+  
+  ngOnInit() {
+    this.responsive.observe(Breakpoints.HandsetPortrait)
+      .subscribe(result => {
+        if (result.matches) {
+          console.log("screens matches HandsetPortrait");
+          this.handset = true;
+        }
+        else{
+          console.log("screens DOES NOT match HandsetPortrait");
+        }
+      });  
+  }
 
   // holds the base‑64 data‑URL for preview
   imageSrc: string | null = null;
@@ -174,6 +192,7 @@ export class App {
       const resp_list = resp_str.split("ASSISTANT:");
       this.answer = resp_list[resp_list.length - 1].trim();
       console.log('Extracted answer:', this.answer);
+      alert('Answer: ' + this.answer)
 
       this.showAnswer = true;
 

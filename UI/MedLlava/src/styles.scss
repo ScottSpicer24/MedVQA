@@ -15,15 +15,7 @@ html {
     typography: Roboto,
     density: 0,
   ));
-
-  // Default the application to a light color theme. This can be changed to
-  // `dark` to enable the dark color theme, or to `light dark` to defer to the
-  // user's system settings.
   color-scheme: light;
-
-  // Set a default background, font and text colors for the application using
-  // Angular Material's system-level CSS variables. Learn more about these
-  // variables at https://material.angular.dev/guide/system-variables
   background-color: var(--mat-sys-surface);
   color: var(--mat-sys-on-surface);
   font: var(--mat-sys-body-medium);
@@ -40,41 +32,15 @@ html, body {
 }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
-/* Background color gradient  style 
 
-body {
-    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-    background-size: 400% 400%;
-    animation: gradient 15s ease infinite;
-}
-
-@keyframes gradient {
-    0% {
-        background-position: 0% 50%;
-    }
-    50% {
-        background-position: 100% 50%;
-    }
-    100% {
-        background-position: 0% 50%;
-    }
-}
-/* END */
-
-
-
-/* Cool infinite background scrolling animation.
- * Twitter: @kootoopas
- */
+/* Cool infinite background scrolling animation. */
 
 /* Exo thin font from Google. */
-//@import url(https://fonts.googleapis.com/css?family=Exo:100);
 @import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@300&display=swap');
 
 /* Background data (Original source: https://subtlepatterns.com/grid-me/) */
 //$bg-url: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAIAAACRXR/mAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAABnSURBVHja7M5RDYAwDEXRDgmvEocnlrQS2SwUFST9uEfBGWs9c97nbGtDcquqiKhOImLs/UpuzVzWEi1atGjRokWLFi1atGjRokWLFi1atGjRokWLFi1af7Ukz8xWp8z8AAAA//8DAJ4LoEAAlL1nAAAAAElFTkSuQmCC";
 $bg-url: "data:image/webp;base64,UklGRsQBAABXRUJQVlA4TLcBAAAvj8FjAAUk23bbNvtfIUuqegMod3tKCXDsGZT2I/oPyW0kR1LWdYzGb9XyBUyPLjZ7EE16jfNhurdoAwQN++tmCCI1F9Vi/6CyJzmyp6mtH0RFHPjOpDq0ZPugtciPaR3R45Ye8wdx4UdeRvR0PNk+SFwvFaGf9peJat+lyfxB4i1Sxu5w4covbw/rB41yTYWjW+ka3WH2oOXIQK6UqnL31s+qgu0exBe1rlfuTrezijjaPYiSWnNTpYJmWZHfOWYP+uoL9CP0k/pmNXyQvE+uQnu40mfeqqq/PKwflCqf/wBfN0RFGNn6QfLPb9fLDSp/+Fy0AYJK3/N6gCO3qgNZP4iquGxL15GHOTGfP5s9SL1Bii5fT4047qyMHyQuJ0f9bZG/QI0e9MS/zu0d9DiwOG6CoCdM1o9BEPx3ePDf4YEphwf/HR78d3jw3+HBf4eHER0e/Hd48N/hwX+HB/8dHkZ0ePDf4cF/hwf/HR78d3gY0eHBf4cH/x0e/Hd48N/hYUSHB/8dHvx3ePDf4cF/h4cRHR78d3jw3+HBf4cH/x0eRnR48N/hwX+HB/8d3t8Vhwf/HR4DAA==";
-
 $bg-width: 50px;
 $bg-height: 50px;
 
@@ -113,7 +79,8 @@ body {
   font: 400 16px/1.5 "Exo 2", ubuntu, "segoe ui", helvetica, arial, sans-serif;
   text-align: center;
   /* img size is 50x50 */
-  background: url($bg-url) repeat 0 0;
+  background: url($bg-url) repeat-x 0 0;
+  background-repeat: repeat;
   
   -webkit-animation: bg-scrolling-reverse .92s infinite; /* Safari 4+ */
   -moz-animation:    bg-scrolling-reverse .92s infinite; /* Fx 5+ */
