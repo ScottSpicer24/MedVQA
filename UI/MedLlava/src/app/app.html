@@ -35,25 +35,25 @@
       </div>
     }
 
-
+    <!-- #X is a reference to the DOM element in angular -->
     <div class="question-grid">
       <label for="question-input" style="font-weight:bold; text-decoration: underline;">Question</label>
-      <textarea class="question-input" id="question-input" [(ngModel)]="input.question"></textarea>
+      <textarea #q class="question-input" id="question-input" [(ngModel)]="input.question" (keydown)="jump($event, q, a)"></textarea>
     </div>
 
 
     <div class="choices-grid">
       <label for="a" style="font-weight:bold;">A: </label>
-      <input type="text" id="a" [(ngModel)]="input.a">
+      <input #a type="text" id="a" [(ngModel)]="input.a" (keydown)="jump($event, a, b, q)">
 
       <label for="b" style="font-weight:bold;">B: </label>
-      <input type="text" id="b" [(ngModel)]="input.b">
+      <input #b type="text" id="b" [(ngModel)]="input.b" (keydown)="jump($event, b, c, a)">
 
       <label for="c" style="font-weight:bold;">C: </label>
-      <input type="text" id="c" [(ngModel)]="input.c">
+      <input #c type="text" id="c" [(ngModel)]="input.c" (keydown)="jump($event, c, d, b)">
 
       <label for="d" style="font-weight:bold;">D: </label>
-      <input type="text" id="d" [(ngModel)]="input.d">
+      <input #d type="text" id="d" [(ngModel)]="input.d" (keydown)="jump($event, d, null, c)">
     </div>
 
     <div class="ctrl-button-container">

@@ -186,7 +186,6 @@ export class App {
     });
   }
 
-
   reset(){
     this.input= {
       image: null,
@@ -199,6 +198,31 @@ export class App {
     this.resetImage();
     this.cdr.detectChanges();
   }
+
+
+  jump(e: KeyboardEvent,
+     current: HTMLElement,
+     next:   HTMLElement | null,
+     prev:   HTMLElement | null = null): void {
+
+    switch (e.key) {
+      /* Down‑arrow or Enter ➜ next field ------------------------------*/
+      case 'ArrowDown':
+      case 'Enter':
+        if (next) { e.preventDefault(); next.focus(); }
+        break;
+
+      /* Up‑arrow ➜ previous field -------------------------------------*/
+      case 'ArrowUp':
+        if (prev) { e.preventDefault(); prev.focus(); }
+        break;
+
+      default:
+        /* Let all other keys act normally */
+        return;
+    }
+  }
+
 }
 
 /* 
