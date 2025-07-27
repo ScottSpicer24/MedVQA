@@ -76,7 +76,7 @@ export class App {
       this.imageUploaded = true;
       console.log(this.imageUploaded);
 
-      delay(500);
+      delay(1000);
       this.cdr.detectChanges();
     };
     reader.readAsDataURL(file);
