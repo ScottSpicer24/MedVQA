@@ -20,6 +20,16 @@
   text-align: center;
   padding: 30px;
 }
+.header-text h1{
+  color: red;
+  font-weight: bold;
+  font-size: 5rem;
+  margin-bottom: 1rem;
+}
+.header-text h3{
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
 
 .inputs {
   gap: 20px;
@@ -70,7 +80,9 @@
   padding: 0.75rem;
   border-radius: 20px;
   font-weight: 500;
-  border: 1px solid;    
+  border: 1px solid; 
+  color:floralwhite;  
+  border: 1px solid black;  
 }
 
 
@@ -86,6 +98,13 @@
 .question-input {
   max-width: 100%;
 }
+.question-input:focus {
+  /* remove the default blue outline */
+  outline: none;
+  /* red highlight */
+  border-color: #e53935;         /* change border itself */
+  box-shadow: 0 0 0 2px #e5393577;
+}
 
 
 .choices-grid{
@@ -100,4 +119,59 @@
 .choices-grid input {
   padding: 2px;
 }
+.choices-grid input:focus {
+  /* remove the default blue outline */
+  outline: none;
+  /* red highlight */
+  border-color: #e53935;         /* change border itself */
+  box-shadow: 0 0 0 2px #e5393577;
+}
 
+.ctrl-button-container{
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  margin: 0 auto;
+}
+.reset-button {
+  background-color: black;
+  padding: 0.75rem;
+  border-radius: 20px;
+  font-weight: 500;
+  border: 1px solid red; 
+  color:floralwhite;
+  width: 30%;
+  position: relative;
+  margin: 10px auto;
+}
+.submit-button {
+  background-color: red;
+  padding: 0.75rem;
+  border-radius: 20px;
+  font-weight: 500;
+  border: 1px solid black; 
+  color:floralwhite;
+  width: 60%;
+  position: relative;
+  margin: 10px auto;
+}
+
+
+
+@media screen and (max-width: 579px) {
+  .main {
+  padding: 3%;
+  text-align: center;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  position: absolute;
+  top: 0; 
+  left: 0; 
+  right: 0; 
+  bottom: 0; 
+  margin: auto; 
+  min-width: 50%;
+  min-height: 50%;
+}
+}

@@ -85,7 +85,7 @@ export class App {
   /** let user pick another image */
   resetImage() {
     this.imageUploaded = false;
-    this.imageSrc = '';
+    this.imageSrc = null;
     this.selectedFile = undefined;
   }
 
