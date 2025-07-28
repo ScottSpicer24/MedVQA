@@ -1,12 +1,14 @@
 import { DragDropModule } from '@angular/cdk/drag-drop';
-import { ChangeDetectorRef, Component, signal, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, signal, OnInit, NgZone } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
-import { delay, Observable, tap } from 'rxjs';
+import { delay } from 'rxjs';
 import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Heartbeat } from './components/heartbeat/heartbeat';
 import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout'
+import { EndpointStatus } from './components/endpoint-status/endpoint-status';
+import { MatButtonModule } from '@angular/material/button';
 
 interface Input {
     image: string | null,
@@ -23,7 +25,7 @@ interface ModelResponse {
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, DragDropModule, MatIconModule, FormsModule, Heartbeat],
+  imports: [RouterOutlet, DragDropModule, MatIconModule, FormsModule, EndpointStatus, MatButtonModule],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
@@ -42,7 +44,7 @@ export class App implements OnInit  {
   }
   handset: boolean = false;
 
-  constructor(private cdr: ChangeDetectorRef, private http: HttpClient, private responsive: BreakpointObserver){
+  constructor(private cdr: ChangeDetectorRef, private http: HttpClient, private responsive: BreakpointObserver, private zone: NgZone,){
     console.log('HandsetPortrait ' + Breakpoints.HandsetPortrait);
   }
   
@@ -87,7 +89,12 @@ export class App implements OnInit  {
     const reader = new FileReader();
 
     reader.onload = () => {
-      console.log("pls work.")
+      this.zone.run(() => {
+        this.imageSrc      = reader.result as string;
+        this.imageUploaded = true;
+        this.cdr.detectChanges();
+      });
+      /* OLD WAY 
       this.imageSrc = reader.result as string; // base‑64 string
       console.log(this.imageSrc);
 
@@ -96,6 +103,7 @@ export class App implements OnInit  {
 
       delay(1000);
       this.cdr.detectChanges();
+      */
     };
     reader.readAsDataURL(file);
   }

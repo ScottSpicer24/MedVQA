@@ -1,0 +1,53 @@
+/* --- constants --- */
+$w: 300px;          
+$h: 100px;
+$strokeWidth: 2px;
+$gap: 10px;
+$speed: 3s;
+$svg: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 #{$w} #{$h}"><polyline fill="none" stroke-width="#{$strokeWidth}" stroke-dasharray="#{$w - $gap} #{$gap}"  stroke="red" points="0,50 300,50"/></svg>';
+
+// Container for the line
+.heartbeat-container {
+  position: relative; 
+  bottom: 0;
+  left: 0;
+  width: $w;
+  height: $h;
+  background: transpatent;
+  overflow: hidden;
+  z-index: 500;
+  margin: 0 auto;
+}
+
+@keyframes slide {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(#{$w}); }   /* move by one tile width */
+}
+
+.slide{ 
+    content:'';
+    display:block;
+    background: url('data:image/svg+xml;utf8,#{$svg}') 0 0 no-repeat; // repeat-x; 
+    width:100%; 
+    height:100%;
+    position:absolute;
+    animation: #{$speed} slide infinite linear;
+    z-index: 100;
+}
+
+@keyframes slide-rev {
+  0%   { transform: translateX(-#{$w}); }
+  100% { transform: translateX(0); }   /* move by one tile width */
+}
+.slide-rev {
+    content:'';
+    display:block;
+    background: url('data:image/svg+xml;utf8,#{$svg}') 0 0 no-repeat; // repeat-x; 
+    width:100%; 
+    height:100%;
+    position:absolute;
+    animation-delay: 0.4s;
+    animation:#{$speed} slide-rev infinite linear;
+    z-index: 100;
+}
+

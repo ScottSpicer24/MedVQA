@@ -9,8 +9,8 @@
 html {
   @include mat.theme((
     color: (
-      primary: mat.$cyan-palette,
-      tertiary: mat.$orange-palette,
+      primary: mat.$red-palette,
+      //accent: black,
     ),
     typography: Roboto,
     density: 0,

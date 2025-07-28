@@ -1,0 +1,27 @@
+<div>
+ <p style="font-weight: bold;">To save cost my GPU server goes to sleep while not being used.</p>
+ <p>
+    @if(state === 200){
+    🟢 Currently the server is <i>running</i>.
+    }
+    @else{
+        @if(state === 503){
+            🟡 Currently the server is <i>starting up...</i><br>
+            (it may take a few minutes)
+        }
+        @else{
+            @if(state === 400){
+                🔴Currently the server is <i>offline</i>, please contact me to start it back up.
+            }
+            @else {🔴An error has occured connecting to the server, please contact me to start it back up.}
+        }
+    }
+    </p>
+    @if(state === 200){
+        <app-heartbeat></app-heartbeat>
+    }
+    @else{
+        <app-flatline></app-flatline>
+    }
+    <button mat-raised-button class="refresh-status" (click)="refresh()">Refresh Server Status</button>
+</div>

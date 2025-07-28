@@ -13,7 +13,10 @@
         Under the hood is a LLaVA model powered by Vicuna-13B.
         I fine-tuned it on 20,000 image-question pairs, boosting test set accuracy by 15%.
       </p>
-      <app-heartbeat></app-heartbeat>
+      <app-endpoint-status></app-endpoint-status>
+    }
+    @if(handset){
+      <p style="margin: 0;">Server may need a few minutes to start up. Visit on a PC for more details.</p>
     }
   </div>
 
@@ -34,7 +37,7 @@
         <!-- instant preview -->
         <div class="uploadedImg">
           <img [src]="imageSrc">
-          <button type="button" class="reset-button" style="width: 80%;" (click)="resetImage()">Clear Image</button>
+          <button mat-raised-button type="button" class="reset-button" style="width: 80%;" (click)="resetImage()">Clear Image</button>
         </div>
       }
     }
@@ -67,8 +70,8 @@
     </div>
 
     <div class="ctrl-button-container">
-      <button (click)="reset()" class="reset-button">Reset</button>
-      <button (click)="submit()" class="submit-button">Submit</button>
+      <button mat-raised-button (click)="reset()" class="reset-button">Reset</button>
+      <button mat-flat-button (click)="submit()" class="submit-button">Submit</button>
     </div>
     
     @if(showAnswer) {
