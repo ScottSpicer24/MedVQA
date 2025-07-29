@@ -90,22 +90,25 @@ export class App implements OnInit  {
 
     reader.onload = () => {
       this.zone.run(() => {
-        this.imageSrc      = reader.result as string;
+        this.imageSrc = reader.result as string;
         this.imageUploaded = true;
         this.cdr.detectChanges();
       });
-      /* OLD WAY 
-      this.imageSrc = reader.result as string; // base‑64 string
-      console.log(this.imageSrc);
-
-      this.imageUploaded = true;
-      console.log(this.imageUploaded);
-
-      delay(1000);
-      this.cdr.detectChanges();
-      */
     };
     reader.readAsDataURL(file);
+    
+    // Detect changes for the next 4s incase the initial 
+    // cdr.detectChanges() or this.imageUploaded = true,  was to fast.
+    for(let i = 1; i < 5; i++){
+      setTimeout(() => {
+        this.cdr.detectChanges();
+        if(this.imageSrc !== null){
+          this.imageUploaded = true;
+        }
+        console.log("src: " + this.imageSrc);
+        console.log("bool: " + this.imageUploaded);
+      }, i*1000); // 1000ms = 1s
+    }
   }
 
   /** let user pick another image */
